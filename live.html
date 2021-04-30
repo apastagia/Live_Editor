@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset = 'utf-8'>
+	<style type="text/css">
+		.innerbox{
+			float: left;
+			width: 48%;
+			border: 1px solid #ccc; 
+			padding: 10px;
+			max-height: 250px;
+		}
+		.preview{
+			width: 97.50%;
+			border: 1px solid #ccc;
+			min-height: 400px;
+		}
+		iframe
+		{
+			width: 100%;
+			border: 1.5px solid black;
+			min-height: 400px;
+		}
+	</style>
+</head>
+<body>
+	<div id = "container">
+		<div id = "box">
+			<textarea class = "innerbox html" placeholder="Enter HTML Here"></textarea>
+			<textarea class = "innerbox css" placeholder="Enter CSS Here"></textarea>
+			<div class = "innerbox preview">
+				<iframe id="live_update">
+					<!DOCTYPE html>
+					<html lang = "en">
+					<head><meta charset = 'utf-8'></head>
+					<body></body>
+					</html>				
+				</iframe>
+			</div><!--iframe holder-->
+		</div><!--box-->
+	</div><!--container-->
+
+	<script src="//ajax.googleapis.com/ajax/labs/jquery/1.10.2/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		
+		$(function(){
+			function fetchHtml()
+			{
+				var html = $(".html").val();
+				return html
+			}
+			function fetchCss()
+			{
+				var css = $(".css").val();
+				return css
+			}
+			$(".innerbox").on("keyup", function(){
+				var target = $("#live_update")[0].contentWindow.document;
+				target.open();
+				target.close();
+
+				var html = fetchHtml();
+				var css = fetchCss();
+
+				$("body", target).append(html);
+				$("head", target).append("<style>" + css +"</style>");
+
+			});
+			});
+		
+
+	</script>
+
+</body>
+</html>
